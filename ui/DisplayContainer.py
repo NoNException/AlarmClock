@@ -1,23 +1,33 @@
 from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.layout import Window
+from prompt_toolkit.layout import Window, HSplit
 from Alarm import get_formatted_alarm
-from prompt_toolkit.filters.utils import to_filter
 import threading
 import time
 from prompt_toolkit.layout.controls import BufferControl
 
 buffer = Buffer(read_only=False, enable_history_search=True)
+clock_buffer = Buffer(read_only=False, enable_history_search=True)
+clock = []
 
 
 class DisplayContainer:
     def __init__(self):
         self.alarm_thread = AlarmThread(buffer)
-        self.window = None
+        self.border_window = None
+        self.time_window = None
+        self.clock_window = None
 
     def create(self):
-        window = Window(content=BufferControl(buffer=buffer), height=10)
-        self.window = window
-        return window
+        window = Window(content=BufferControl(buffer=buffer), height=6)
+        self.border_window = Window(char='─', height=1)
+        self.time_window = window
+        self.clock_window = Window(content=BufferControl(buffer=clock_buffer), height=10)
+        return HSplit([self.time_window, self.border_window, self.clock_window])
+
+
+def reload_display_layout_clock():
+    clock_buffer.reset()
+    clock_buffer.text = "\n".join(clock)
 
 
 class AlarmThread(threading.Thread):
