@@ -1,5 +1,4 @@
 from ui.RootContainer import root_container
-from ui.DisplayContainer import display_container
 from prompt_toolkit import Application
 from KeyBinding import *
 

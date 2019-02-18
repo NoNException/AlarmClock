@@ -1,5 +1,6 @@
 from prompt_toolkit.key_binding import KeyBindings
 from ui.DisplayContainer import display_container, AlarmThread, buffer
+from dialog.SetAlarmDialog import SetAlarmDialog
 
 kb = KeyBindings()
 
@@ -20,3 +21,8 @@ def start_(event):
     if display_container.alarm_thread.stop_flag:
         display_container.alarm_thread = AlarmThread(buffer)
         display_container.alarm_thread.start()
+
+
+@kb.add('c-n')
+def set_alarm(event):
+    SetAlarmDialog(event)
