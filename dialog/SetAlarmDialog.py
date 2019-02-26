@@ -5,6 +5,12 @@ from ui.DisplayContainer import clock, reload_display_layout_clock
 from Alarm import get_current_alarm
 from ui.RootContainer import root_container
 
+"""                             
+
+    设置提示框，添加闹钟，点击OK,将输入框的内容添加到第二个输入框中。
+    ，不会听最修改
+"""
+
 
 class SetAlarmDialog:
     def __init__(self, event):
